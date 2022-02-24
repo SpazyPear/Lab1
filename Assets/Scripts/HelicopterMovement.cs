@@ -26,8 +26,10 @@ public class HelicopterMovement : MonoBehaviour
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
 
-        transform.Translate(Vector3.right * h * Time.deltaTime * speed);
-        transform.Translate(Vector3.up * v * Time.deltaTime * speed);
+        transform.Translate(Vector2.right * h * Time.deltaTime * speed);
+        transform.Translate(Vector2.up * v * Time.deltaTime * speed);
+
+        transform.position = new Vector2(Mathf.Clamp(transform.position.x, -7.8f, 7.8f), Mathf.Clamp(transform.position.y, -4.2f, 4.2f));
 
         if (Input.GetAxisRaw("Horizontal") > 0)
         {
@@ -52,10 +54,7 @@ public class HelicopterMovement : MonoBehaviour
         {
             uiManager.takeDamage();
         }
-        else if (collision.gameObject.CompareTag("Soldier"))
-        {
-            uiManager.pickup(collision.gameObject);
-        }
+        
         else if (collision.gameObject.CompareTag("Hospital"))
         {
             uiManager.resetSoldierMeter(true);
@@ -67,6 +66,10 @@ public class HelicopterMovement : MonoBehaviour
         if (collision.gameObject.CompareTag("Bomb"))
         {
             uiManager.takeDamage();
+        }
+        else if (collision.gameObject.CompareTag("Soldier"))
+        {
+            uiManager.pickup(collision.gameObject);
         }
     }
 }

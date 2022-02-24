@@ -30,9 +30,9 @@ public class SoldierSpawner : MonoBehaviour
         Vector2 spawnPos;
         while (true)
         {
-            spawnPos.x = UnityEngine.Random.Range(-4, 10);
+            spawnPos.x = UnityEngine.Random.Range(-4, 7);
             spawnPos.y = UnityEngine.Random.Range(-3, 3);
-            if (!Physics.CheckBox(spawnPos, soldierPrefab.transform.localScale))
+            if (!Physics2D.BoxCast(spawnPos, new Vector2(soldierPrefab.transform.localScale.x + 0.4f, soldierPrefab.transform.localScale.y + 0.4f), 1f, Vector2.zero))
             {
                 Instantiate(soldierPrefab, spawnPos, Quaternion.identity);
                 yield break;
