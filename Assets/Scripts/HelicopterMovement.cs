@@ -7,12 +7,13 @@ public class HelicopterMovement : MonoBehaviour
 
     public float speed = 3f;
     SpriteRenderer _renderer;
-    HealthComponent healthComponent;
+    UIManager uiManager;
+    public SoldierSpawner soldierSpawner;
     // Start is called before the first frame update
     void Start()
     {
         _renderer = GetComponent<SpriteRenderer>();
-        healthComponent = GetComponent<HealthComponent>();
+        uiManager = GetComponent<UIManager>();
     }
 
     // Update is called once per frame
@@ -38,7 +39,15 @@ public class HelicopterMovement : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Tree"))
         {
-            healthComponent.takeDamage();
+            uiManager.takeDamage();
+        }
+        else if (collision.gameObject.CompareTag("Soldier"))
+        {
+            uiManager.pickup(collision.gameObject);
+        }
+        else if (collision.gameObject.CompareTag("Hospital"))
+        {
+            uiManager.resetSoldierMeter();
         }
     }
 }
