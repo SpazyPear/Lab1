@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +10,9 @@ public class HelicopterMovement : MonoBehaviour
     SpriteRenderer _renderer;
     UIManager uiManager;
     public SoldierSpawner soldierSpawner;
+
+    public event EventHandler onReset;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -33,6 +37,13 @@ public class HelicopterMovement : MonoBehaviour
         {
             _renderer.flipX = false;
         }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            transform.position = new Vector2(0, 0);
+            onReset?.Invoke(this, EventArgs.Empty);
+        }
+
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -47,7 +58,7 @@ public class HelicopterMovement : MonoBehaviour
         }
         else if (collision.gameObject.CompareTag("Hospital"))
         {
-            uiManager.resetSoldierMeter();
+            uiManager.resetSoldierMeter(true);
         }
     }
 }
