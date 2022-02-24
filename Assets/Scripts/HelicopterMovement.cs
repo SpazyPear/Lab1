@@ -46,7 +46,7 @@ public class HelicopterMovement : MonoBehaviour
 
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Tree"))
         {
@@ -59,6 +59,14 @@ public class HelicopterMovement : MonoBehaviour
         else if (collision.gameObject.CompareTag("Hospital"))
         {
             uiManager.resetSoldierMeter(true);
+        }       
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Bomb"))
+        {
+            uiManager.takeDamage();
         }
     }
 }
